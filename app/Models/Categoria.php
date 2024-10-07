@@ -13,6 +13,6 @@ class Categoria extends Model
 
     public function Produtos()
     {
-        return $this->hasMany(Produto::class, 'CATEGORIA_ID', 'CATEGORIA_ID');
+        return $this->hasMany(Produto::class, 'CATEGORIA_ID', 'CATEGORIA_ID')->where('PRODUTO_ATIVO', 1);
     }
 }

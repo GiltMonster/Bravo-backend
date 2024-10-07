@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CategoriaResource;
+use App\Http\Resources\ProdutoResource;
 use App\Models\Categoria;
 use App\Models\Produto;
 use Illuminate\Http\Request;
@@ -10,18 +12,19 @@ class ProdutoController extends Controller
 {
     public function index()
     {
-        $categorias = Categoria::with("Produtos")
-            ->get();
+        $categorias = CategoriaResource::collection(Categoria::where('CATEGORIA_ATIVO', 1)
+            ->whereHas('Produtos')
+            ->get())
+            ->toJson();
 
-        return $categorias->toJson();
+        return $categorias;
     }
 
-    public function home()
+    public function show(Produto $produto)
     {
-        $produtos = Produto::where('PRODUTO_DESCONTO', '>', 10)->get();
+        $produto = ProdutoResource::make($produto)
+            ->toJson();
 
-        return view('produto.home', [
-            'produtos' => $produtos
-        ]);
+        return $produto;
     }
 }

@@ -21,5 +21,10 @@ class Produto extends Model
         return $this->hasMany(ProdutoImagem::class, 'PRODUTO_ID', 'PRODUTO_ID');
     }
 
+    public function ProdutoEstoque()
+    {
+        return $this->belongsTo(ProdutoEstoque::class, 'PRODUTO_ID', 'PRODUTO_ID');
+    }
+
 
 }
