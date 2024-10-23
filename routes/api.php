@@ -4,10 +4,18 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /* ---------------------------------- Home ---------------------------------- */
 // Route::get('/', [ProdutoController::class, 'index']);
 // Route::get('/produto/{produto}', [ProdutoController::class, 'show']);
+
+/* ---------------------------------- Login ---------------------------------- */
+Route::prefix('auth')->group(function () {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::middleware('api')->get('verify', [AuthController::class, 'verifyToken']);
+});
+
 
 Route::resource('produto', ProdutoController::class)->missing(function (Request $request) {
     return response()->json(['message' => 'Rota do produto não encontrada'], 404);
@@ -34,4 +42,3 @@ Route::resource('usuario', UsuarioController::class)->missing(function (Request 
 // GET	          /usuario/{Usuario}/edit 	edit          	usuario.edit       |        Não             |   Formulário de edição  |
 // PUT/PATCH      /usuario/{Usuario}        update	        usuario.update     |        Não             |   Atualizar             |
 // DELETE	      /usuario/{Usuario}        destroy	        usuario.destroy    |        Não             |   Excluir               |
-
