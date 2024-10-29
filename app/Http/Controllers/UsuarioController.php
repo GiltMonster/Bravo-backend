@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UsuarioResource;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -42,5 +43,10 @@ class UsuarioController extends Controller
                 'usuario' => null
             ], 400);
         }
+    }
+
+    public function show(Usuario $usuario)
+    {
+        return UsuarioResource::make($usuario)->toJson();
     }
 }

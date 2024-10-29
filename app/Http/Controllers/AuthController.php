@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Resources\UsuarioResource;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Contracts\Providers\JWT;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
@@ -35,7 +33,9 @@ class AuthController extends Controller
             return response()->json(['message' => 'Usuário não encontrado'], 404);
         }
 
-        return response()->json(compact('user'));
+        $user = UsuarioResource::make($user);
+
+        return response()->json($user);
 
 
     }
