@@ -18,6 +18,9 @@ class CategoriaResource extends JsonResource
 
         if ($produtos) {
             $produtos = $produtos->map(function ($produto) {
+                if(!$produto->ProdutoEstoque) {
+                    return null;
+                }
                 return [
                     'id' => $produto->PRODUTO_ID,
                     'nome' => $produto->PRODUTO_NOME,
@@ -25,6 +28,7 @@ class CategoriaResource extends JsonResource
                     'preco' => $produto->PRODUTO_PRECO,
                     'desconto' => $produto->PRODUTO_DESCONTO,
                     'estoque' => $produto->ProdutoEstoque->PRODUTO_QTD,
+                    'indisponivel' => $produto->ProdutoEstoque->PRODUTO_QTD == 0 ? true : false,
                     'imagens' => $produto->ProdutoImagem->map(function ($imagem) {
                         return [
                             'id' => $imagem->IMAGEM_ID,
