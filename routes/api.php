@@ -31,7 +31,7 @@ Route::resource('produto', ProdutoController::class)->missing(function (Request 
 // PUT/PATCH      /produto/{Produto}        update	        produto.update     |        Não             |   Atualizar             |
 // DELETE	      /produto/{Produto}        destroy	        produto.destroy    |        Não             |   Excluir               |
 
-Route::resource('usuario', UsuarioController::class)->missing(function (Request $request) {
+Route::middleware('api')->resource('usuario', UsuarioController::class)->missing(function (Request $request) {
     return response()->json(['message' => 'Rota do usuário não encontrada'], 404);
 })->except(['index', 'create', 'edit']);
 
@@ -41,12 +41,9 @@ Route::resource('usuario', UsuarioController::class)->missing(function (Request 
 // GET	          /usuario/create	        create        	usuario.create     |        Não             |   Formulário de criação |
 // POST	          /usuario              	store         	usuario.store      |        Sim             |   Salvar novo           |
 // GET	          /usuario/{Usuario}/edit 	edit          	usuario.edit       |        Não             |   Formulário de edição  |
-// PUT/PATCH      /usuario/{Usuario}        update	        usuario.update     |        Não             |   Atualizar             |
+// PUT/PATCH      /usuario/{Usuario}        update	        usuario.update     |        Sim             |   Atualizar             |
 // DELETE	      /usuario/{Usuario}        destroy	        usuario.destroy    |        Não             |   Excluir               |
 
 Route::middleware('api')->resource('endereco', EnderecoController::class)->missing(function (Request $request) {
     return response()->json(['message' => 'Rota do endereço não encontrada'], 404);
 })->except(['index', 'create', 'edit']);
-
-// Route::middleware('api')->get('/usuario/{id}/endereco', [EnderecoController::class, 'index']);
-// Route::middleware('api')->post('/usuario/endereco', [EnderecoController::class, 'store']);
