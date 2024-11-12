@@ -5,6 +5,7 @@ use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\EnderecoController;
 
 /* ---------------------------------- Home ---------------------------------- */
@@ -47,3 +48,9 @@ Route::middleware('api')->resource('usuario', UsuarioController::class)->missing
 Route::middleware('api')->resource('endereco', EnderecoController::class)->missing(function (Request $request) {
     return response()->json(['message' => 'Rota do endereço não encontrada'], 404);
 })->except(['index', 'create', 'edit']);
+
+
+Route::middleware('api')->resource('carrinho', CarrinhoController::class)->missing(function (Request $request) {
+    return response()->json(['message' => 'Rota do carrinho não encontrada'], 404);
+})->except(['index','create', 'edit']);
+

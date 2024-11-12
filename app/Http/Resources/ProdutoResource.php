@@ -21,6 +21,7 @@ class ProdutoResource extends JsonResource
             'preco' => $this->PRODUTO_PRECO,
             'desconto' => $this->PRODUTO_DESCONTO,
             'estoque' => $this->ProdutoEstoque->PRODUTO_QTD,
+            'indisponivel' => $this->ProdutoEstoque->PRODUTO_QTD == 0 ? true : false,
             'imagens' => $this->ProdutoImagem->map(function ($imagem) {
                 return [
                     'id' => $imagem->IMAGEM_ID,
