@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\EnderecoController;
+use App\Http\Controllers\PedidoController;
 
 /* ---------------------------------- Home ---------------------------------- */
 // Route::get('/', [ProdutoController::class, 'index']);
@@ -54,3 +55,7 @@ Route::middleware('api')->resource('carrinho', CarrinhoController::class)->missi
     return response()->json(['message' => 'Rota do carrinho não encontrada'], 404);
 })->except(['index','create', 'edit']);
 
+
+Route::middleware('api')->resource('pedido', PedidoController::class)->missing(function (Request $request) {
+    return response()->json(['message' => 'Rota do pedido não encontrada'], 404);
+})->except(['index','create', 'edit']);
