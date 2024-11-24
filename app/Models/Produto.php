@@ -10,6 +10,7 @@ class Produto extends Model
     use HasFactory;
     protected $table = 'PRODUTO';
     protected $primaryKey = 'PRODUTO_ID';
+    public $timestamps = false;
 
     public function Categoria()
     {
