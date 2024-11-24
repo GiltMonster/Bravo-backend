@@ -26,8 +26,6 @@ class CarrinhoController extends Controller
             return response()->json(['message' => 'Carrinho vazio'], 404);
         }
 
-
-
         return response()->json($carrinho, 200);
     }
 
@@ -82,31 +80,28 @@ class CarrinhoController extends Controller
         return response()->json(['message' => 'Carrinho criado com sucesso, aproveite o seu ' . $produto->PRODUTO_NOME], 200);
     }
 
-    public function update(Carrinho $carrinho)
+    public function update(Request $request)
     {
-        dd($carrinho);
-        if (!$carrinho->usuario_id) {
+
+        if (!$request->usuario_id) {
             return response()->json(['message' => 'Usuário não encontrado'], 404);
         }
-        if (!$carrinho->produto_id) {
+        if (!$request->produto_id) {
             return response()->json(['message' => 'Produto não encontrado'], 404);
         }
-        if (!$carrinho->item_qtd) {
+        if (!$request->item_qtd) {
             return response()->json(['message' => 'Quantidade não declarada'], 404);
         }
-
-        if (!Carrinho::where('USUARIO_ID', $request->usuario_id)->where('PRODUTO_ID', $request->produto_id)->exists()) {
-            return response()->json(['message' => 'Produto não encontrado no carrinho'], 404);
-        }
-
-        $carrinho = Carrinho::where('USUARIO_ID', $request->usuario_id)->where('PRODUTO_ID', $request->produto_id)->first();
 
         if (Produto::find($request->produto_id)->ProdutoEstoque->PRODUTO_QTD < $request->item_qtd) {
             return response()->json(['message' => 'Quantidade MAXIMA atingida'], 404);
         }
 
+        $carrinho = Carrinho::where('USUARIO_ID', $request->usuario_id)->where('PRODUTO_ID', $request->produto_id)->first();
         $carrinho->ITEM_QTD = $request->item_qtd;
         $carrinho->save();
+
+        return response()->json(['message' => 'Carrinho atualizado com sucesso'], 200);
     }
 
 
