@@ -65,7 +65,7 @@ class CarrinhoController extends Controller
             $carrinho->ITEM_QTD = $carrinho->ITEM_QTD + $request->item_qtd;
             $carrinho->save();
 
-            return response()->json(['message' => 'Produto adicionado ao carrinho com sucesso'], 200);
+            return response()->json(['message' => 'Produto adicionado ao carrinho com sucesso, agora você possui: ' . $carrinho->ITEM_QTD . ' unidades'], 200);
         }
 
         $carrinho = new Carrinho();
