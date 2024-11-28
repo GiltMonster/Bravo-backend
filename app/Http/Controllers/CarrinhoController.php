@@ -23,7 +23,7 @@ class CarrinhoController extends Controller
         $carrinho = CarrinhoResource::collection(Carrinho::where('USUARIO_ID', $usuario_id)->get());
 
         if ($carrinho->isEmpty()) {
-            return response()->json(['message' => 'Carrinho vazio'], 404);
+            return response()->json(['message' => 'Carrinho vazio'], 200);
         }
 
         return response()->json($carrinho, 200);
