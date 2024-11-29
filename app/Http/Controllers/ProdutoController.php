@@ -27,4 +27,17 @@ class ProdutoController extends Controller
 
         return $produto;
     }
+
+    public function search($search)
+    {
+        $produtos = CategoriaResource::collection(Categoria::where('CATEGORIA_ATIVO', 1)
+            ->whereHas('Produtos', function ($query) use ($search) {
+                $query->where('PRODUTO_NOME', 'like', "%$search%");
+            })
+            ->get())
+            ->toJson();
+
+        return $produtos;
+    }
+
 }

@@ -20,9 +20,13 @@ Route::prefix('auth')->group(function () {
 });
 
 
-Route::resource('produto', ProdutoController::class)->missing(function (Request $request) {
-    return response()->json(['message' => 'Rota do produto não encontrada'], 404);
-})->except(['create', 'store', 'edit', 'update', 'destroy']);
+Route::middleware('api')->group(function () {
+    Route::resource('produto', ProdutoController::class)->missing(function (Request $request) {
+        return response()->json(['message' => 'Rota do produto não encontrada'], 404);
+    })->except(['create', 'store', 'edit', 'update', 'destroy']);
+    Route::get('search/{search}', [ProdutoController::class, 'search']);
+});
+
 
 // Verb         |        URI             |  Action      |   Route Name         |        Usarei?         |   Pra que serve?        |
 // GET	          /produto	                index         	produto.index      |        Sim             |   Listar todos          |
