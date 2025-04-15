@@ -63,3 +63,10 @@ Route::middleware('api')->resource('carrinho', CarrinhoController::class)->missi
 Route::middleware('api')->resource('pedido', PedidoController::class)->missing(function (Request $request) {
     return response()->json(['message' => 'Rota do pedido não encontrada'], 404);
 })->except(['index','create', 'edit']);
+
+
+Route::get('/', function () {
+    return response()->json(['status' => 'API rodando!']);
+});
+
+Route::get('/health', fn () => ['status' => 'ok']);
