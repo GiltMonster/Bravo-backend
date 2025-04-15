@@ -37,4 +37,4 @@ RUN chown -R www-data:www-data /var/www \
 EXPOSE 8080
 
 # Comando para subir o servidor Laravel (via PHP embutido)
-CMD php -S 0.0.0.0:8080 -t public
+CMD php artisan serve --host=0.0.0.0 --port=8000
